@@ -13,6 +13,8 @@ import { QuestionTypes, IQuestion, IPrompter, INameValueChoice } from '../prompt
 import SqlToolsServerClient from '../languageservice/serviceclient';
 import { window, env, Uri } from 'vscode';
 import azureAccountExtension from '../controllers/vscodeWrapper';
+import { AzureCodeGrant } from '../../lib/adal-aad-node/src/engine/AzureCodeGrant';
+import { AzureAuth } from '../../lib/adal-aad-node/src/engine/AzureAuth';
 
 // Concrete implementation of the IConnectionCredentials interface
 export class ConnectionCredentials implements IConnectionCredentials {
@@ -44,6 +46,7 @@ export class ConnectionCredentials implements IConnectionCredentials {
     public packetSize: number;
     public typeSystemVersion: string;
     public connectionString: string;
+
 
     /**
      * Create a connection details contract from connection credentials.
@@ -204,20 +207,9 @@ export class ConnectionCredentials implements IConnectionCredentials {
                     } else if (value === utils.authTypeToString(AuthenticationTypes.ActiveDirectoryUniversal)) {
                         //TODO: parameterize all the strings
                         // check if Azure Account is installed - if not, prompt user to install
-                        if (!azureAccountExtension) {
-                            let installAzureAccount = 'Install Azure Account';
-                            window.showInformationMessage(
-                                'The Azure Account Extension is needed for this feature. Please download it before continuing',
-                                installAzureAccount
-                                )
-                            .then(selection => {
-                              if (selection === installAzureAccount) {
-                                env.openExternal(Uri.parse(
-                                    'vscode:extension/ms-vscode.azure-account'));
-                              }
-                            });
-                            return undefined;
-                        }
+
+                        // need to prompt user to select code grant or device code for login
+                        } else {
                         // Also, hook into AAD MFA here
                         return undefined;
                     }

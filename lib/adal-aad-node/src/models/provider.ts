@@ -21,3 +21,14 @@ export interface AADResource {
     id: string;
     resource: string;
 }
+
+
+export interface CredentialProvider {
+    handle: number;
+
+    saveCredential(credentialId: string, password: string): Thenable<boolean>;
+
+    readCredential(credentialId: string): Thenable<Credential>;
+
+    deleteCredential(credentialId: string): Thenable<boolean>;
+}
