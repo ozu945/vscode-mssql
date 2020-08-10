@@ -5,7 +5,11 @@
 import * as vscode from 'vscode';
 import * as TypeMoq from 'typemoq';
 import SqlToolsServiceClient from '../src/languageservice/serviceclient';
+<<<<<<< HEAD
 import { AccountService } from '../src/azure/accountService'
+=======
+import { AccountService } from '../src/azure/accountService';
+>>>>>>> main
 import { HandleFirewallRuleRequest, IHandleFirewallRuleResponse,
     CreateFirewallRuleRequest, ICreateFirewallRuleResponse, IHandleFirewallRuleParams } from '../src/models/contracts/firewall/firewallRequest';
 import VscodeWrapper from '../src/controllers/vscodeWrapper';
@@ -54,6 +58,7 @@ suite('Firewall Service Tests', () => {
         accountService = new AccountService(client.object, vscodeWrapper.object);
     });
 
+<<<<<<< HEAD
 
     test('isSignedIn Test', () => {
         let isSignedIn = accountService.isSignedIn;
@@ -61,4 +66,6 @@ suite('Firewall Service Tests', () => {
         accountService.isSignedIn = true;
         assert.isTrue(accountService.isSignedIn, 'Firewall Service should be signed in once set');
     });
+=======
+>>>>>>> main
 });

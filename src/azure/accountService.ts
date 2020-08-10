@@ -59,7 +59,7 @@ export class AccountService {
                 tenants: [tenant]
             },
             isStale: this._isStale,
-            isSignedIn: undefined
+            isSignedIn: false
         };
         return account;
     }
@@ -88,5 +88,13 @@ export class AccountService {
         };
         return mapping;
     }
+
+    public initializeSessionAccount(): void {
+        this._session = this._vscodeWrapper.azureAccountExtension.exports.filter[0].session;
+        this._account = this.convertToAzureAccount(this._session);
+    }
+
+
+
 
 }

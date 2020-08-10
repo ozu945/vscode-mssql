@@ -566,6 +566,7 @@ export class ConnectionUI {
         return this.promptItemChoice({}, Utils.getSignInQuickPickItems()).then((selection) => {
             if (selection && selection.command) {
                 return this._vscodeWrapper.executeCommand(selection.command).then(() => {
+                    this.connectionManager.accountService.initializeSessionAccount();
                     this.connectionManager.accountService.account.isSignedIn = true;
                     return true;
                 });
@@ -600,6 +601,7 @@ export class ConnectionUI {
                 }
             });
         } else {
+            this.connectionManager.accountService.initializeSessionAccount();
             this.connectionManager.accountService.account.isSignedIn = true;
             return true;
         }

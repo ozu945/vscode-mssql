@@ -11,7 +11,7 @@ import { HandleFirewallRuleRequest, IHandleFirewallRuleResponse,
     CreateFirewallRuleRequest, ICreateFirewallRuleResponse, IHandleFirewallRuleParams } from '../src/models/contracts/firewall/firewallRequest';
 import VscodeWrapper from '../src/controllers/vscodeWrapper';
 import { assert } from 'chai';
-import { IAzureSession } from '../src/models/interfaces';
+import { IAzureSession, IAzureResourceFilter } from '../src/models/interfaces';
 
 
 suite('Firewall Service Tests', () => {
@@ -40,6 +40,10 @@ suite('Firewall Service Tests', () => {
             tenantId: 'test',
             credentials: undefined
         };
+        let mockFilter: IAzureResourceFilter = {
+            session: mockSession,
+            subscription: undefined
+        };
         let mockExtension: vscode.Extension<any> = {
             id: '',
             extensionKind: undefined,
@@ -49,7 +53,7 @@ suite('Firewall Service Tests', () => {
             activate: undefined,
             extensionUri: undefined,
             exports: {
-                sessions: [mockSession]
+                filter: [mockFilter]
             }
         };
         vscodeWrapper.setup(v => v.azureAccountExtension).returns(() => mockExtension);
@@ -68,7 +72,11 @@ suite('Firewall Service Tests', () => {
         let server = 'test_server';
         let startIpAddress = '1.2.3.1';
         let endIpAddress = '1.2.3.255';
+<<<<<<< HEAD
         accountService.isSignedIn = true;
+=======
+        accountService.initializeSessionAccount();
+>>>>>>> main
         let mockToken = {
             expiresOn: new Date(),
             resource: undefined,
