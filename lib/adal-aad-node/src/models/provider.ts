@@ -20,6 +20,7 @@ export interface ProviderResources {
 export interface AADResource {
     id: string;
     resource: string;
+    endpoint: string;
 }
 
 

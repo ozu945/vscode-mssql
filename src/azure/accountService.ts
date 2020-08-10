@@ -12,7 +12,6 @@ import VscodeWrapper from '../controllers/vscodeWrapper';
 
 export class AccountService {
 
-    private _isSignedIn: boolean = false;
     private _session: IAzureSession = undefined;
     private _account: IAccount = undefined;
     private _token = undefined;
@@ -22,10 +21,6 @@ export class AccountService {
         private _client: SqlToolsServiceClient,
         private _vscodeWrapper: VscodeWrapper
     ) {}
-
-    public get isSignedIn(): boolean {
-        return this._isSignedIn;
-    }
 
     public get account(): IAccount {
         return this._account;
@@ -63,7 +58,8 @@ export class AccountService {
             properties: {
                 tenants: [tenant]
             },
-            isStale: this._isStale
+            isStale: this._isStale,
+            isSignedIn: undefined
         };
         return account;
     }
@@ -92,16 +88,5 @@ export class AccountService {
         };
         return mapping;
     }
-
-    public set isSignedIn(value: boolean) {
-        this._isSignedIn = value;
-        if (value) {
-            this._session = this._vscodeWrapper.azureAccountExtension.exports.sessions[0];
-            this._account = this.convertToAzureAccount(this._session);
-        }
-    }
-
-
-
 
 }
